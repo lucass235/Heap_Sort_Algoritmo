@@ -4,9 +4,9 @@ public class heapSort {
     public static void main(String[] args) {
         int[] arr = { 55, 10, 33, 22, 11, 25 };
 
-        heapSortAlgorithm(arr);
+        // heapSortAlgorithm(arr);
 
-        // heapSortAlgorithmInterative(arr, arr.length);
+        heapSortAlgorithmInterative(arr, arr.length);
 
         for (int i = 0; i < arr.length; i++) {
             System.out.print(arr[i] + " ");
@@ -51,20 +51,28 @@ public class heapSort {
     public static void heapSortAlgorithmInterative(int vetor[], int n) {
         int i = n / 2;
         int pai, filho, t;
-        for ( i = n /2; i > 0; i--) {
+        while (true) {
+            if (i > 0) {
+                i--;
+                t = vetor[i];
+            } else {
+                n--;
+                if (n == 0)
+                    return;
+                t = vetor[n];
+                vetor[n] = vetor[0];
+            }
             pai = i;
-            filho = 2 * i;
-            t = vetor[pai];
-            while (filho <= n) {
-                if (filho < n && vetor[filho] < vetor[filho + 1]) {
+            filho = i * 2 + 1;
+            while (filho < n) {
+                if ((filho + 1 < n) && (vetor[filho + 1] > vetor[filho]))
                     filho++;
-                }
-                if (t > vetor[filho]) {
-                    break;
-                } else {
+                if (vetor[filho] > t) {
                     vetor[pai] = vetor[filho];
                     pai = filho;
-                    filho = 2 * pai;
+                    filho = pai * 2 + 1;
+                } else {
+                    break;
                 }
             }
             vetor[pai] = t;
